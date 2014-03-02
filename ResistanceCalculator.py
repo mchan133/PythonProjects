@@ -4,16 +4,14 @@ Created on Feb 27, 2014
 @author: mchan_000
 '''
 
-#####################################
+########## Helper Functions ##################
 def pCalc(listR=[0]):
     sum=0
-    #print("p:" + str(listR))
     for ele in listR:
         sum+=1/ele
     return 1/sum
 def sCalc(listR=[0]):
     sum=0
-    #print("s:" + str(listR))
     for ele in listR:
         sum+=ele
     return sum
@@ -23,8 +21,8 @@ def checkNum(i):
         a=int(i)
         return True
     except: return False
-#####################################
-def infix(QQ):
+########### Legwork Functions ##########################
+def calculate(QQ):
     sP=[]
     eP=[]
     for i in range(len(QQ)):
@@ -34,7 +32,6 @@ def infix(QQ):
         print("Incorrect Syntax")
         for ele in QQ: print(str(ele),end="")
         print()
-        #print(str(sP) + "\n" + str(eP))
     link={}
     keys=[]
     numKeys=0
@@ -49,7 +46,6 @@ def infix(QQ):
                     keys.append(i)
                     numKeys+=1
                     break
-    #print(str(link) + '\n' + str(keys) + '\n')
     keys = keys[::-1]
     for num in keys:
         endBlock = link[num]
@@ -57,16 +53,13 @@ def infix(QQ):
         getRidOf=int((endBlock-num)/2)-1
         temp = ['-',0]*getRidOf
         QQ.insert(num+1,sol)
-        #del QQ[num+2:endBlock+1]
         L=QQ[:num+2]
         L.extend(temp)
         L.extend(QQ[endBlock+1:])
         QQ = L
-        #print(str(QQ))
     return solve(QQ)
         
 def solve(block):
-    #print(str(block))
     Qop=[]
     QQ=[]
     for ele in block:
@@ -74,7 +67,6 @@ def solve(block):
         if ele=="-" or ele=="=": Qop.append(ele)
         else: QQ.append(ele)
     QQ = QQ[::-1]
-    #print(str(QQ))
     Qop = Qop[::-1]
     while len(QQ) > 1:
             int1=QQ.pop()
@@ -103,11 +95,10 @@ def parseResist(string):
         elif checkNum(letter):
             multi+=letter
     if len(multi)>0: QQ.append(float(multi))
-    #print(str(QQ))
     if len(QQ)%2==0:
         print(saved + "\nSomething's wrong...")
         return "Unknown"
-    return infix(QQ)
+    return calculate(QQ)
     
 ###########################
 if __name__ == "__main__":
